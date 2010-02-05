@@ -1,4 +1,8 @@
 Revision history for Template-Plugin-YUI2-Loader
 
+0.01    2010-02-05
+- minor documentation tweaks
+- bumped up module version to first non developer release
+
 0.01_1  2010-01-20 - developer release
 initial upload to cpan

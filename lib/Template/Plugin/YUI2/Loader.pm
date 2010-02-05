@@ -13,11 +13,11 @@ Template::Plugin::YUI2::Loader - dependency management with YUI's loader util
 
 =head1 VERSION
 
-Version 0.01_1
+Version 0.01
 
 =cut
 
-our $VERSION = '0.01_1';
+our $VERSION = '0.01';
 
 require 5.008;
 
@@ -52,6 +52,7 @@ This module aims to ease the use of YUI's loader utility by providing means to c
 	loader.insert();
   <script>
   </head>
+  ...
 
   # in a template B.tt :
 
@@ -66,7 +67,7 @@ This module aims to ease the use of YUI's loader utility by providing means to c
 
 =head1 EXPORT
 
-None.
+Exported stash variable: YUI2Loader_
 
 =head1 METHODS
 
