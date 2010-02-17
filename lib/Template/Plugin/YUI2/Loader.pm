@@ -13,13 +13,13 @@ Template::Plugin::YUI2::Loader - dependency management with YUI's loader util
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-require 5.008;
+use 5.006;
 
 =head1 SYNOPSIS
 
@@ -36,7 +36,14 @@ This module aims to ease the use of YUI's loader utility by providing means to c
   # in a template wrapper.tt :
   
   <head>
-  [% USE loader = YUI2.Loader; %]
+  ...
+  </head>
+  <body>
+  ...
+
+  [% # presumably quite late in the body insert the loader
+     USE loader = YUI2.Loader; 
+  %]
   
   <script src="http://yui.yahooapis.com/2.8.0r4/build/yuiloader/yuiloader-min.js"></script>
   <script type="text/javascript">
@@ -45,14 +52,11 @@ This module aims to ease the use of YUI's loader utility by providing means to c
 	    	require: [% loader.components %],
     		onSuccess: function() {
 			[% loader.on_success %]
-    		},
-   		timeout: 10000,
-    		combine: true
+    		}
 	});
 	loader.insert();
   <script>
-  </head>
-  ...
+  </body>
 
   # in a template B.tt :
 
@@ -104,7 +108,7 @@ sub components {
     my $self = shift;
 
     if ( @_ ) {
-	@{$self->_data->{components}}{ @_ } = ( map { 1 } @_ ); 
+	@{$self->_data->{components}}{ @_ } = ( map { 1 } @_ );
     	return $self;
     } else {
         '[ '.( join ", ", map { "'$_'" } sort keys %{$self->_data->{components}} ).' ]';
@@ -151,6 +155,7 @@ sub _data {
     	while ( $s ) {
 		$s->set( 'YUI2Loader_', $data );
 		$s = $s->{_PARENT};
+		last if !defined $s->{_PARENT};
 	}
 	$data;
     };
